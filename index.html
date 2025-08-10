@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاسبه‌گر حرفه‌ای قیمت طلا (لحظه‌ای)</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="محاسبه‌گر آنلاین و حرفه‌ای قیمت طلای آبشده، نو و دست دوم با قابلیت محاسبه لحظه‌ای، کارمزد و سود/زیان. بهترین ابزار برای معاملات طلا.">
+    <meta name="keywords"
+        content="محاسبه‌گر طلا, قیمت طلا, طلای آبشده, قیمت لحظه‌ای طلا, مبدل واحد طلا, مثقال, گرم, عیار, اجرت طلا, سود طلا, ورود با گوگل, ذخیره محاسبات, محاسبه ارز, قیمت دلار, قیمت یورو">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#d4af37">
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="محاسبه‌گر حرفه‌ای قیمت طلا و ارز (لحظه‌ای)">
+    <meta property="og:description"
+        content="دقیق‌ترین ابزار آنلاین برای محاسبه قیمت طلای نو, دست دوم و آب‌شده و همچنین محاسبه ارز بر اساس قیمت لحظه‌ای بازار ایران.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-website-url.com/">
+    <meta property="og:image" content="https://your-website-url.com/og-image.png">
+
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FAD961;'/%3E%3Cstop offset='100%25' style='stop-color:%23D4AF37;'/%3E%3C/defs%3E%3Cpath fill='url(%23a)' d='M85,15 L15,15 C12.24,15 10,17.24 10,20 L10,80 C10,82.76 12.24,85 15,85 L85,85 C87.76,85 90,82.76 90,80 L90,20 C90,17.24 87.76,15 85,15 z M80,75 L20,75 L20,25 L80,25 L80,75 z'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <canvas id="particle-canvas"></canvas>
+
+    <header>
+        <nav class="navbar">
+            <div class="navbar-container container">
+                <input type="checkbox" name="nav-toggle" id="nav-toggle-checkbox">
+                <div class="hamburger-lines">
+                    <span class="line line1"></span>
+                    <span class="line line2"></span>
+                    <span class="line line3"></span>
+                </div>
+
+                <ul class="menu-items">
+                    <!-- User Status / Login Button -->
+                    <li id="user-menu-item">
+                        <div id="user-status">
+                            <button id="login-btn" class="nav-button google-login-btn">
+                                <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+                                    <g fill="none" fill-rule="evenodd">
+                                        <path
+                                            d="M17.64 9.2045c0-.6381-.0573-1.2518-.1682-1.8409H9v3.4818h4.8436c-.2086 1.125-.8441 2.0782-1.7959 2.7164v2.2581h2.9087c1.7018-1.5668 2.6836-3.875 2.6836-6.6154z"
+                                            fill="#4285F4"></path>
+                                        <path
+                                            d="M9 18c2.43 0 4.4673-.806 5.9564-2.1805l-2.9087-2.2581c-.8059.5405-1.8368.86-3.0477.86-2.344 0-4.3227-1.5832-5.0327-3.7104H.957v2.3318C2.4382 16.1423 5.4818 18 9 18z"
+                                            fill="#34A853"></path>
+                                        <path
+                                            d="M3.9673 10.71c-.18-.5405-.2823-1.1168-.2823-1.71s.1023-1.1695.2823-1.71V4.9582H.957C.3477 6.1718 0 7.5477 0 9c0 1.4523.3477 2.8282.957 4.0418L3.9673 10.71z"
+                                            fill="#FBBC05"></path>
+                                        <path
+                                            d="M9 3.5795c1.3214 0 2.5077.4541 3.4405 1.346l2.5813-2.5814C13.4636.8918 11.426 0 9 0 5.4818 0 2.4382 1.8577.957 4.9582L3.9673 7.29C4.6773 5.1632 6.656 3.5795 9 3.5795z"
+                                            fill="#EA4335"></path>
+                                    </g>
+                                </svg>
+                                <span>ورود با گوگل</span>
+                            </button>
+                            <div id="user-profile" class="hidden">
+                                <span id="user-name"></span>
+                                <div id="user-avatar-container" role="button" aria-haspopup="true" aria-expanded="false"
+                                    tabindex="0">
+                                    <img id="user-pic" src="" alt="عکس پروفایل">
+                                    <svg id="default-avatar-icon" class="hidden" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M12 9.5c-2-2.8-4-5-4-5.5 0-2 2-3.5 4-3.5s4 1.5 4 3.5c0 .5-2 2.7-4 5.5z" />
+                                        <path d="M12 20.5c-5.5-5.5-5.5-12 0-17 5.5 5 5.5 11.5 0 17z" />
+                                    </svg>
+                                </div>
+                                <!-- Desktop Dropdown Menu -->
+                                <div id="user-menu-dropdown" class="user-menu-desktop">
+                                    <button id="logout-btn" class="dropdown-item danger">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                            <polyline points="16 17 21 12 16 7"></polyline>
+                                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                                        </svg>
+                                        خروج
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Theme Toggle Button -->
+                    <li id="theme-menu-item">
+                        <button id="theme-toggle-btn" title="تغییر حالت شب/روز">
+                            <span class="theme-label">حالت نمایش</span>
+                            <div class="theme-icon-wrapper">
+                                <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="5"></circle>
+                                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                                </svg>
+                                <svg id="theme-icon-moon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24"
+                                    height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                </svg>
+                            </div>
+                        </button>
+                    </li>
+                    <!-- Mobile-only logout button -->
+                    <li id="mobile-logout-item" class="hidden">
+                        <button id="logout-btn-mobile" class="nav-button danger">خروج از حساب</button>
+                    </li>
+                </ul>
+
+                <h1 class="logo">محاسبه‌گر طلا و ارز</h1>
+            </div>
+        </nav>
+    </header>
+
+    <div id="toast-container"></div>
+
+    <main id="app-wrapper">
+        <section class="card" id="calculator-card" aria-labelledby="calculator-heading">
+            <h2 id="calculator-heading" class="visually-hidden">ابزارهای طلا</h2>
+
+            <div class="tabs-container">
+                <div class="tabs">
+                    <input type="radio" id="radio-1" name="tabs" checked />
+                    <label class="tab" for="radio-1">محاسبه فوری</label>
+                    <input type="radio" id="radio-2" name="tabs" />
+                    <label class="tab" for="radio-2">محاسبه سفارشی</label>
+                    <input type="radio" id="radio-3" name="tabs" />
+                    <label class="tab" for="radio-3">مبدل واحد‌ها</label>
+                    <span class="glider"></span>
+                </div>
+            </div>
+
+            <div id="auto-price-calculator" role="tabpanel" aria-labelledby="auto-mode-btn">
+                <div class="form-group">
+                    <label class="form-label-header">نوع طلا</label>
+                    <div class="tabs tabs-small tabs-gold-type">
+                        <input type="radio" id="gold-type-auto-new" name="gold-type-auto-tabs" value="نو/زینتی"
+                            checked />
+                        <label class="tab tab-small" for="gold-type-auto-new">نو / زینتی</label>
+                        <input type="radio" id="gold-type-auto-used" name="gold-type-auto-tabs" value="دست دوم" />
+                        <label class="tab tab-small" for="gold-type-auto-used">دست دوم</label>
+                        <input type="radio" id="gold-type-auto-melted" name="gold-type-auto-tabs" value="آب‌شده" />
+                        <label class="tab tab-small" for="gold-type-auto-melted">آب‌شده</label>
+                        <span class="glider glider-gold-type"></span>
+                    </div>
+                </div>
+                <div class="form-group" id="carat-select-group-auto">
+                    <label class="form-label-header">عیار طلا</label>
+                    <div class="tabs tabs-small">
+                        <input type="radio" id="carat-auto-750" name="carat-auto-tabs" value="750" checked />
+                        <label class="tab tab-small" for="carat-auto-750">۱۸ عیار (۷۵۰)</label>
+                        <input type="radio" id="carat-auto-999" name="carat-auto-tabs" value="999" />
+                        <label class="tab tab-small" for="carat-auto-999">۲۴ عیار (۹۹۹)</label>
+                        <span class="glider glider-small"></span>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="weight-auto" class="inp">
+                            <input type="text" id="weight-auto" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">وزن (گرم)</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="weight-auto-error" class="error-message"></div>
+                            <small class="helper-text">مثال: 12.54</small>
+                        </div>
+                    </div>
+                    <div class="form-group hidden" id="carat-input-group-auto">
+                        <label for="carat-auto" class="inp">
+                            <input type="text" id="carat-auto" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">عیار دقیق</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="carat-auto-error" class="error-message"></div>
+                            <small class="helper-text">مثال: 935</small>
+                        </div>
+                    </div>
+                    <div class="form-group" id="commission-group-auto">
+                        <label for="commission-auto" class="inp">
+                            <input type="text" id="commission-auto" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">اجرت (درصد)</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="commission-auto-error" class="error-message"></div>
+                            <small class="helper-text">اختیاری - مثال: 15</small>
+                        </div>
+                    </div>
+                    <div class="form-group" id="profit-group-auto">
+                        <label for="profit-auto" class="inp">
+                            <input type="text" id="profit-auto" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">سود (درصد)</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="profit-auto-error" class="error-message"></div>
+                            <small class="helper-text">اختیاری - مثال: 7</small>
+                        </div>
+                    </div>
+                    <div class="form-group" id="tax-group-auto">
+                        <label for="tax-auto" class="inp">
+                            <input type="text" id="tax-auto" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">مالیات (درصد)</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="tax-auto-error" class="error-message"></div>
+                            <small class="helper-text">اختیاری - مثال: 9</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button id="calculate-auto-btn" disabled>محاسبه با قیمت لحظه‌ای</button>
+                </div>
+            </div>
+
+            <div id="manual-price-calculator" class="hidden" role="tabpanel" aria-labelledby="manual-mode-btn">
+                <div class="form-group">
+                    <label class="form-label-header">نوع طلا</label>
+                    <div class="tabs tabs-small tabs-gold-type">
+                        <input type="radio" id="gold-type-manual-new" name="gold-type-manual-tabs" value="نو/زینتی"
+                            checked />
+                        <label class="tab tab-small" for="gold-type-manual-new">نو / زینتی</label>
+                        <input type="radio" id="gold-type-manual-used" name="gold-type-manual-tabs" value="دست دوم" />
+                        <label class="tab tab-small" for="gold-type-manual-used">دست دوم</label>
+                        <input type="radio" id="gold-type-manual-melted" name="gold-type-manual-tabs" value="آب‌شده" />
+                        <label class="tab tab-small" for="gold-type-manual-melted">آب‌شده</label>
+                        <span class="glider glider-gold-type"></span>
+                    </div>
+                </div>
+                <div class="form-group" id="carat-select-group-manual">
+                    <label class="form-label-header">عیار طلا</label>
+                    <div class="tabs tabs-small">
+                        <input type="radio" id="carat-manual-750" name="carat-manual-tabs" value="750" checked />
+                        <label class="tab tab-small" for="carat-manual-750">۱۸ عیار (۷۵۰)</label>
+                        <input type="radio" id="carat-manual-999" name="carat-manual-tabs" value="999" />
+                        <label class="tab tab-small" for="carat-manual-999">۲۴ عیار (۹۹۹)</label>
+                        <span class="glider glider-small"></span>
+                    </div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="weight-manual" class="inp">
+                            <input type="text" id="weight-manual" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">وزن (گرم)</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="weight-manual-error" class="error-message"></div>
+                            <small class="helper-text">مثال: 12.54</small>
+                        </div>
+                    </div>
+                    <div class="form-group hidden" id="carat-input-group-manual">
+                        <label for="carat-manual" class="inp">
+                            <input type="text" id="carat-manual" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">عیار دقیق</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="carat-manual-error" class="error-message"></div>
+                            <small class="helper-text">مثال: 935</small>
+                        </div>
+                    </div>
+                    <div class="form-group" id="commission-group-manual">
+                        <label for="commission-manual" class="inp">
+                            <input type="text" id="commission-manual" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">اجرت (درصد)</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="commission-manual-error" class="error-message"></div>
+                            <small class="helper-text">اختیاری - مثال: 15</small>
+                        </div>
+                    </div>
+                    <div class="form-group" id="profit-group-manual">
+                        <label for="profit-manual" class="inp">
+                            <input type="text" id="profit-manual" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">سود (درصد)</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="profit-manual-error" class="error-message"></div>
+                            <small class="helper-text">اختیاری - مثال: 7</small>
+                        </div>
+                    </div>
+                    <div class="form-group" id="tax-group-manual">
+                        <label for="tax-manual" class="inp">
+                            <input type="text" id="tax-manual" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">مالیات (درصد)</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="tax-manual-error" class="error-message"></div>
+                            <small class="helper-text">اختیاری - مثال: 9</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="price-manual" class="inp">
+                            <input type="text" id="price-manual" class="calc-input" inputmode="decimal"
+                                placeholder="&nbsp;">
+                            <span class="label">قیمت هر گرم ۱۸ عیار</span>
+                            <span class="focus-bg"></span>
+                        </label>
+                        <div class="input-meta">
+                            <div id="price-manual-error" class="error-message"></div>
+                            <small class="helper-text">مثال: 3,450,000</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button id="calculate-manual-btn" disabled>محاسبه با قیمت دستی</button>
+                </div>
+            </div>
+
+            <div id="unit-converter" class="hidden" role="tabpanel" aria-labelledby="converter-mode-btn">
+                <div class="form-group">
+                    <label for="converter-value" class="inp">
+                        <input type="text" id="converter-value" class="calc-input" inputmode="decimal"
+                            placeholder="&nbsp;" value="1">
+                        <span class="label">مقدار</span>
+                        <span class="focus-bg"></span>
+                    </label>
+                    <div class="input-meta">
+                        <div></div>
+                        <small class="helper-text">مثال: 1</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label-header">از واحد</label>
+                    <div class="tabs tabs-converter">
+                        <input type="radio" id="from-unit-1" name="from-unit-tabs" value="mesghal_705" checked />
+                        <label class="tab tab-converter" for="from-unit-1">مثقال ۱۷ عیار (۷۰۵)</label>
+                        <input type="radio" id="from-unit-2" name="from-unit-tabs" value="gram_750" />
+                        <label class="tab tab-converter" for="from-unit-2">گرم ۱۸ عیار (۷۵۰)</label>
+                        <input type="radio" id="from-unit-3" name="from-unit-tabs" value="gram_705" />
+                        <label class="tab tab-converter" for="from-unit-3">گرم ۱۷ عیار (۷۰۵)</label>
+                        <input type="radio" id="from-unit-4" name="from-unit-tabs" value="gram_999" />
+                        <label class="tab tab-converter" for="from-unit-4">گرم ۲۴ عیار (۹۹۹)</label>
+                        <span class="glider glider-converter"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label-header">به واحد</label>
+                    <div class="tabs tabs-converter">
+                        <input type="radio" id="to-unit-1" name="to-unit-tabs" value="gram_750" checked />
+                        <label class="tab tab-converter" for="to-unit-1">گرم ۱۸ عیار (۷۵۰)</label>
+                        <input type="radio" id="to-unit-2" name="to-unit-tabs" value="mesghal_705" />
+                        <label class="tab tab-converter" for="to-unit-2">مثقال ۱۷ عیار (۷۰۵)</label>
+                        <input type="radio" id="to-unit-3" name="to-unit-tabs" value="gram_705" />
+                        <label class="tab tab-converter" for="to-unit-3">گرم ۱۷ عیار (۷۰۵)</label>
+                        <input type="radio" id="to-unit-4" name="to-unit-tabs" value="gram_999" />
+                        <label class="tab tab-converter" for="to-unit-4">گرم ۲۴ عیار (۹۹۹)</label>
+                        <span class="glider glider-converter"></span>
+                    </div>
+                </div>
+                <div class="result" id="converter-result">
+                    <p>نتیجه تبدیل در اینجا نمایش داده می‌شود.</p>
+                </div>
+            </div>
+
+            <div class="result" id="result">
+                <p>برای مشاهده نتیجه، اطلاعات را وارد کرده و روی دکمه محاسبه کلیک کنید.</p>
+            </div>
+        </section>
+
+        <section class="card" id="currency-card" aria-labelledby="currency-heading">
+            <h2 id="currency-heading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path>
+                    <path d="M12 18V6"></path>
+                </svg>
+                محاسبه‌گر ارز
+            </h2>
+
+            <div class="form-group">
+                <label class="form-label-header">نوع ارز</label>
+                <div class="tabs tabs-small tabs-currency">
+                    <input type="radio" id="currency-usd" name="currency-tabs" value="دلار آمریکا" checked />
+                    <label class="tab tab-small" for="currency-usd">دلار</label>
+                    <input type="radio" id="currency-eur" name="currency-tabs" value="یورو" />
+                    <label class="tab tab-small" for="currency-eur">یورو</label>
+                    <input type="radio" id="currency-gbp" name="currency-tabs" value="پوند انگلیس" />
+                    <label class="tab tab-small" for="currency-gbp">پوند</label>
+                    <input type="radio" id="currency-try" name="currency-tabs" value="لیر ترکیه" />
+                    <label class="tab tab-small" for="currency-try">لیر</label>
+                    <input type="radio" id="currency-iqd" name="currency-tabs" value="دینار عراق" />
+                    <label class="tab tab-small" for="currency-iqd">دینار</label>
+                    <span class="glider glider-currency"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label-header">نوع قیمت</label>
+                <div class="tabs tabs-small">
+                    <input type="radio" id="price-mode-live" name="price-mode-tabs" value="live" checked />
+                    <label class="tab tab-small" for="price-mode-live">قیمت لحظه‌ای</label>
+                    <input type="radio" id="price-mode-manual" name="price-mode-tabs" value="manual" />
+                    <label class="tab tab-small" for="price-mode-manual">قیمت دستی</label>
+                    <span class="glider glider-small"></span>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="currency-amount" class="inp">
+                        <input type="text" id="currency-amount" class="calc-input" inputmode="decimal"
+                            placeholder="&nbsp;">
+                        <span id="currency-amount-label" class="label">مقدار (دلار آمریکا)</span>
+                        <span class="focus-bg"></span>
+                    </label>
+                    <div class="input-meta">
+                        <div id="currency-amount-error" class="error-message"></div>
+                        <small class="helper-text">مثال: 100</small>
+                    </div>
+                </div>
+                <div class="form-group hidden" id="currency-manual-price-group">
+                    <label for="currency-manual-price" class="inp">
+                        <input type="text" id="currency-manual-price" class="calc-input" inputmode="decimal"
+                            placeholder="&nbsp;">
+                        <span class="label">قیمت هر واحد</span>
+                        <span class="focus-bg"></span>
+                    </label>
+                    <div class="input-meta">
+                        <div id="currency-manual-price-error" class="error-message"></div>
+                        <small class="helper-text">مثال: 58,500</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result" id="currency-live-price-display">
+                <p>قیمت لحظه‌ای: <b id="live-price-value">-</b> تومان</p>
+            </div>
+
+            <div class="form-group">
+                <button id="calculate-currency-btn" disabled>محاسبه</button>
+            </div>
+
+            <div class="result" id="currency-result">
+                <p>برای مشاهده نتیجه، اطلاعات را وارد کرده و روی دکمه محاسبه کلیک کنید.</p>
+            </div>
+        </section>
+
+        <section class="prices-section card" id="prices-card" aria-labelledby="prices-heading">
+            <h2 id="prices-heading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"></line>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+                قیمت لحظه‌ای طلا و ارز
+            </h2>
+            <div id="update-status-container"></div>
+            <table id="goldTable"></table>
+        </section>
+
+        <section class="card" id="total-profit-loss-card" aria-labelledby="total-pl-heading">
+            <h2 id="total-pl-heading" class="with-tooltip">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20V10M18 20V4M6 20V16" />
+                </svg>
+                خلاصه سود و زیان
+                <span class="tooltip-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span class="tooltip-text">این مبلغ، تفاوت ارزش کل محاسبات شما (طلا و ارز) با ارزش لحظه‌ای آن‌ها را
+                        نمایش می‌دهد.</span>
+                </span>
+            </h2>
+            <div id="total-profit-loss-container">
+                <p>موردی برای محاسبه وجود ندارد.</p>
+            </div>
+        </section>
+
+        <section class="card" id="history-card" aria-labelledby="history-heading">
+            <h2 id="history-heading">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 3v18h18" />
+                    <path
+                        d="m18.7 12.3-1.2-1.2a2 2 0 0 0-2.8 0L9.4 16.4a2 2 0 0 0 0 2.8l1.2 1.2a2 2 0 0 0 2.8 0l5.3-5.3a2 2 0 0 0 0-2.8z" />
+                    <path d="M9 13h-2" />
+                    <path d="M6 10h-2" />
+                    <path d="M3 7h8" />
+                </svg>
+                محاسبات قبلی
+            </h2>
+            <div class="history-controls">
+                <label for="history-search-input" class="inp">
+                    <input type="search" id="history-search-input" placeholder="&nbsp;">
+                    <span class="label">جستجو...</span>
+                    <span class="focus-bg"></span>
+                </label>
+                <div class="select-wrapper">
+                    <select id="history-filter" aria-label="فیلتر کردن تاریخچه">
+                        <option value="all">همه انواع</option>
+                        <option value="نو/زینتی">نو / زینتی</option>
+                        <option value="دست دوم">دست دوم</option>
+                        <option value="آب‌شده">آب‌شده</option>
+                        <option value="ارز">ارز</option>
+                    </select>
+                    <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="m6 9 6 6 6-6" />
+                    </svg>
+                </div>
+                <div class="select-wrapper">
+                    <select id="history-sort" aria-label="مرتب‌سازی تاریخچه">
+                        <option value="date-desc">جدیدترین</option>
+                        <option value="date-asc">قدیمی‌ترین</option>
+                        <option value="profit-desc">بیشترین سود</option>
+                        <option value="loss-desc">بیشترین زیان</option>
+                    </select>
+                    <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="m6 9 6 6 6-6" />
+                    </svg>
+                </div>
+            </div>
+            <div id="history-container">
+                <!-- History items will be injected here by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>محاسبه‌گر طلا و ارز - تمامی قیمت‌ها تقریبی هستند.</p>
+    </footer>
+
+    <div id="confirmation-modal" class="modal-overlay hidden" aria-modal="true" role="dialog">
+        <div class="modal-content">
+            <p id="modal-message">آیا از حذف این مورد مطمئن هستید؟</p>
+            <div class="modal-actions">
+                <button id="modal-cancel-btn" class="modal-button secondary">انصراف</button>
+                <button id="modal-confirm-btn" class="modal-button danger">حذف</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- === START: Firebase SDK Scripts === -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <!-- === END: Firebase SDK Scripts === -->
+
+    <script src="./script.js"></script>
+</body>
+
+</html>
