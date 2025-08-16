@@ -10,20 +10,32 @@
     <meta name="description"
         content="محاسبه‌گر آنلاین و حرفه‌ای قیمت طلای آبشده، نو و دست دوم با قابلیت محاسبه لحظه‌ای، کارمزد و سود/زیان. بهترین ابزار برای معاملات طلا.">
     <meta name="keywords"
-        content="محاسبه‌گر طلا, قیمت طلا, طلای آبشده, قیمت لحظه‌ای طلا, مبدل واحد طلا, مثقال, گرم, عیار, اجرت طلا, سود طلا, ورود با گوگل, ذخیره محاسبات, محاسبه ارز, قیمت دلار, قیمت یورو">
+        content="محاسبه‌گر طلا, قیمت طلا, طلای آبشده, قیمت لحظه‌ای طلا, مبدل واحد طلا, مثقال, گرم, عیار, اجرت طلا, سود طلا, ورود با گوگل, ذخیره محاسبات, محاسبه ارز, قیمت دلار, قیمت یورو, سبد دارایی, پورتفولیو طلا">
     <meta name="robots" content="index, follow">
+
+    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#d4af37">
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ماشین حساب طلا">
+    <link rel="apple-touch-icon" href="images/icons/icon-192x192.png">
+
 
     <!-- Open Graph / Social Media Meta Tags -->
     <meta property="og:title" content="محاسبه‌گر حرفه‌ای قیمت طلا و ارز (لحظه‌ای)">
     <meta property="og:description"
         content="دقیق‌ترین ابزار آنلاین برای محاسبه قیمت طلای نو, دست دوم و آب‌شده و همچنین محاسبه ارز بر اساس قیمت لحظه‌ای بازار ایران.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://your-website-url.com/">
-    <meta property="og:image" content="https://your-website-url.com/og-image.png">
+    <meta property="og:url" content="https://goldcalc.ir/">
+    <meta property="og:image" content="https://goldcalc.ir/images/og-image.png">
 
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FAD961;'/%3E%3Cstop offset='100%25' style='stop-color:%23D4AF37;'/%3E%3C/defs%3E%3Cpath fill='url(%23a)' d='M85,15 L15,15 C12.24,15 10,17.24 10,20 L10,80 C10,82.76 12.24,85 15,85 L85,85 C87.76,85 90,82.76 90,80 L90,20 C90,17.24 87.76,15 85,15 z M80,75 L20,75 L20,25 L80,25 L80,75 z'/%3E%3C/svg%3E">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/css/shepherd.css"/>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -130,6 +142,43 @@
         </nav>
     </header>
 
+    <nav class="mobile-nav" id="mobile-nav">
+        <button class="mobile-nav-btn active" data-target="calculator-card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 9.5c-2-2.8-4-5-4-5.5 0-2 2-3.5 4-3.5s4 1.5 4 3.5c0 .5-2 2.7-4 5.5z" />
+                <path d="M12 20.5c-5.5-5.5-5.5-12 0-17 5.5 5 5.5 11.5 0 17z" />
+            </svg>
+            <span>محاسبه طلا</span>
+        </button>
+        <button class="mobile-nav-btn" data-target="currency-card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"></path>
+                <path d="M12 18V6"></path>
+            </svg>
+            <span>محاسبه ارز</span>
+        </button>
+        <button class="mobile-nav-btn" data-target="prices-card">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"></line>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+            <span>قیمت لحظه‌ای</span>
+        </button>
+        <button class="mobile-nav-btn" data-target="summary-orders-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18" />
+                <path
+                    d="m18.7 12.3-1.2-1.2a2 2 0 0 0-2.8 0L9.4 16.4a2 2 0 0 0 0 2.8l1.2 1.2a2 2 0 0 0 2.8 0l5.3-5.3a2 2 0 0 0 0-2.8z" />
+            </svg>
+            <span>سبد دارایی</span>
+        </button>
+    </nav>
+
     <div id="toast-container"></div>
 
     <main id="app-wrapper">
@@ -176,7 +225,7 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="weight-auto" class="inp">
-                            <input type="text" id="weight-auto" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="weight-auto" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">وزن (گرم)</span>
                             <span class="focus-bg"></span>
@@ -188,7 +237,7 @@
                     </div>
                     <div class="form-group hidden" id="carat-input-group-auto">
                         <label for="carat-auto" class="inp">
-                            <input type="text" id="carat-auto" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="carat-auto" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">عیار دقیق</span>
                             <span class="focus-bg"></span>
@@ -200,7 +249,7 @@
                     </div>
                     <div class="form-group" id="commission-group-auto">
                         <label for="commission-auto" class="inp">
-                            <input type="text" id="commission-auto" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="commission-auto" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">اجرت (درصد)</span>
                             <span class="focus-bg"></span>
@@ -212,7 +261,7 @@
                     </div>
                     <div class="form-group" id="profit-group-auto">
                         <label for="profit-auto" class="inp">
-                            <input type="text" id="profit-auto" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="profit-auto" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">سود (درصد)</span>
                             <span class="focus-bg"></span>
@@ -224,7 +273,7 @@
                     </div>
                     <div class="form-group" id="tax-group-auto">
                         <label for="tax-auto" class="inp">
-                            <input type="text" id="tax-auto" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="tax-auto" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">مالیات (درصد)</span>
                             <span class="focus-bg"></span>
@@ -235,8 +284,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button id="calculate-auto-btn" disabled>محاسبه با قیمت لحظه‌ای</button>
+                <div class="form-actions">
+                    <button id="calculate-auto-btn" class="calculate-btn" disabled>محاسبه با قیمت لحظه‌ای</button>
+                    <button id="clear-auto-btn" class="clear-btn" title="پاک کردن فرم">پاک کردن</button>
                 </div>
             </div>
 
@@ -267,7 +317,7 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label for="weight-manual" class="inp">
-                            <input type="text" id="weight-manual" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="weight-manual" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">وزن (گرم)</span>
                             <span class="focus-bg"></span>
@@ -279,7 +329,7 @@
                     </div>
                     <div class="form-group hidden" id="carat-input-group-manual">
                         <label for="carat-manual" class="inp">
-                            <input type="text" id="carat-manual" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="carat-manual" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">عیار دقیق</span>
                             <span class="focus-bg"></span>
@@ -291,7 +341,7 @@
                     </div>
                     <div class="form-group" id="commission-group-manual">
                         <label for="commission-manual" class="inp">
-                            <input type="text" id="commission-manual" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="commission-manual" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">اجرت (درصد)</span>
                             <span class="focus-bg"></span>
@@ -303,7 +353,7 @@
                     </div>
                     <div class="form-group" id="profit-group-manual">
                         <label for="profit-manual" class="inp">
-                            <input type="text" id="profit-manual" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="profit-manual" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">سود (درصد)</span>
                             <span class="focus-bg"></span>
@@ -315,7 +365,7 @@
                     </div>
                     <div class="form-group" id="tax-group-manual">
                         <label for="tax-manual" class="inp">
-                            <input type="text" id="tax-manual" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="tax-manual" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">مالیات (درصد)</span>
                             <span class="focus-bg"></span>
@@ -327,26 +377,29 @@
                     </div>
                     <div class="form-group">
                         <label for="price-manual" class="inp">
-                            <input type="text" id="price-manual" class="calc-input" inputmode="decimal"
+                            <input type="tel" id="price-manual" class="calc-input"
                                 placeholder="&nbsp;">
                             <span class="label">قیمت هر گرم ۱۸ عیار</span>
                             <span class="focus-bg"></span>
                         </label>
                         <div class="input-meta">
                             <div id="price-manual-error" class="error-message"></div>
-                            <small class="helper-text">مثال: 3,450,000</small>
+                            <small class="helper-text" id="manual-price-helper">
+                                قیمت لحظه‌ای: <span id="current-live-gold-price">-</span>
+                            </small>
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <button id="calculate-manual-btn" disabled>محاسبه با قیمت دستی</button>
+                <div class="form-actions">
+                    <button id="calculate-manual-btn" class="calculate-btn" disabled>محاسبه با قیمت دستی</button>
+                    <button id="clear-manual-btn" class="clear-btn" title="پاک کردن فرم">پاک کردن</button>
                 </div>
             </div>
 
             <div id="unit-converter" class="hidden" role="tabpanel" aria-labelledby="converter-mode-btn">
                 <div class="form-group">
                     <label for="converter-value" class="inp">
-                        <input type="text" id="converter-value" class="calc-input" inputmode="decimal"
+                        <input type="tel" id="converter-value" class="calc-input"
                             placeholder="&nbsp;" value="1">
                         <span class="label">مقدار</span>
                         <span class="focus-bg"></span>
@@ -409,15 +462,15 @@
                 <label class="form-label-header">نوع ارز</label>
                 <div class="tabs tabs-small tabs-currency">
                     <input type="radio" id="currency-usd" name="currency-tabs" value="دلار آمریکا" checked />
-                    <label class="tab tab-small" for="currency-usd">دلار</label>
+                    <label class="tab tab-small" for="currency-usd">دلار آمریکا</label>
                     <input type="radio" id="currency-eur" name="currency-tabs" value="یورو" />
                     <label class="tab tab-small" for="currency-eur">یورو</label>
                     <input type="radio" id="currency-gbp" name="currency-tabs" value="پوند انگلیس" />
-                    <label class="tab tab-small" for="currency-gbp">پوند</label>
+                    <label class="tab tab-small" for="currency-gbp">پوند انگلیس</label>
                     <input type="radio" id="currency-try" name="currency-tabs" value="لیر ترکیه" />
-                    <label class="tab tab-small" for="currency-try">لیر</label>
+                    <label class="tab tab-small" for="currency-try">لیر ترکیه</label>
                     <input type="radio" id="currency-iqd" name="currency-tabs" value="دینار عراق" />
-                    <label class="tab tab-small" for="currency-iqd">دینار</label>
+                    <label class="tab tab-small" for="currency-iqd">دینار عراق</label>
                     <span class="glider glider-currency"></span>
                 </div>
             </div>
@@ -436,7 +489,7 @@
             <div class="form-grid">
                 <div class="form-group">
                     <label for="currency-amount" class="inp">
-                        <input type="text" id="currency-amount" class="calc-input" inputmode="decimal"
+                        <input type="tel" id="currency-amount" class="calc-input"
                             placeholder="&nbsp;">
                         <span id="currency-amount-label" class="label">مقدار (دلار آمریکا)</span>
                         <span class="focus-bg"></span>
@@ -448,14 +501,19 @@
                 </div>
                 <div class="form-group hidden" id="currency-manual-price-group">
                     <label for="currency-manual-price" class="inp">
-                        <input type="text" id="currency-manual-price" class="calc-input" inputmode="decimal"
+                        <input type="tel" id="currency-manual-price" class="calc-input"
                             placeholder="&nbsp;">
                         <span class="label">قیمت هر واحد</span>
                         <span class="focus-bg"></span>
                     </label>
                     <div class="input-meta">
                         <div id="currency-manual-price-error" class="error-message"></div>
-                        <small class="helper-text">مثال: 58,500</small>
+                       
+                        <small class="helper-text" id="manual-currency-price-helper">
+                            <span id="manual-currency-price-label">قیمت لحظه‌ای:</span>
+                            <span id="current-live-currency-price">-</span>
+                        </small>
+                      
                     </div>
                 </div>
             </div>
@@ -464,8 +522,9 @@
                 <p>قیمت لحظه‌ای: <b id="live-price-value">-</b> تومان</p>
             </div>
 
-            <div class="form-group">
-                <button id="calculate-currency-btn" disabled>محاسبه</button>
+            <div class="form-actions">
+                <button id="calculate-currency-btn" class="calculate-btn" disabled>محاسبه با قیمت لحظه‌ای</button>
+                <button id="clear-currency-btn" class="clear-btn" title="پاک کردن فرم">پاک کردن</button>
             </div>
 
             <div class="result" id="currency-result">
@@ -486,79 +545,98 @@
             <table id="goldTable"></table>
         </section>
 
-        <section class="card" id="total-profit-loss-card" aria-labelledby="total-pl-heading">
-            <h2 id="total-pl-heading" class="with-tooltip">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 20V10M18 20V4M6 20V16" />
-                </svg>
-                خلاصه سود و زیان
-                <span class="tooltip-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        <section id="summary-orders-wrapper">
+            <section class="card" id="total-profit-loss-card" aria-labelledby="total-pl-heading">
+                <h2 id="total-pl-heading" class="with-tooltip">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20V10M18 20V4M6 20V16" />
                     </svg>
-                    <span class="tooltip-text">این مبلغ، تفاوت ارزش کل محاسبات شما (طلا و ارز) با ارزش لحظه‌ای آن‌ها را
-                        نمایش می‌دهد.</span>
-                </span>
-            </h2>
-            <div id="total-profit-loss-container">
-                <p>موردی برای محاسبه وجود ندارد.</p>
-            </div>
-        </section>
+                    خلاصه سبد دارایی
+                    <span class="tooltip-trigger">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span class="tooltip-text">این بخش خلاصه‌ای از عملکرد سبد دارایی شما را نمایش می‌دهد.</span>
+                    </span>
+                </h2>
+                <div id="total-profit-loss-container">
+                    <!-- Content will be injected here by JavaScript -->
+                </div>
+            </section>
 
-        <section class="card" id="history-card" aria-labelledby="history-heading">
-            <h2 id="history-heading">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 3v18h18" />
-                    <path
-                        d="m18.7 12.3-1.2-1.2a2 2 0 0 0-2.8 0L9.4 16.4a2 2 0 0 0 0 2.8l1.2 1.2a2 2 0 0 0 2.8 0l5.3-5.3a2 2 0 0 0 0-2.8z" />
-                    <path d="M9 13h-2" />
-                    <path d="M6 10h-2" />
-                    <path d="M3 7h8" />
-                </svg>
-                محاسبات قبلی
-            </h2>
-            <div class="history-controls">
-                <label for="history-search-input" class="inp">
-                    <input type="search" id="history-search-input" placeholder="&nbsp;">
-                    <span class="label">جستجو...</span>
-                    <span class="focus-bg"></span>
-                </label>
-                <div class="select-wrapper">
-                    <select id="history-filter" aria-label="فیلتر کردن تاریخچه">
-                        <option value="all">همه انواع</option>
-                        <option value="نو/زینتی">نو / زینتی</option>
-                        <option value="دست دوم">دست دوم</option>
-                        <option value="آب‌شده">آب‌شده</option>
-                        <option value="ارز">ارز</option>
-                    </select>
-                    <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="m6 9 6 6 6-6" />
+            <section class="card" id="orders-card" aria-labelledby="orders-heading">
+                <h2 id="orders-heading">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z">
+                        </path>
+                        <path d="m3.3 7 8.7 5 8.7-5"></path>
+                        <path d="M12 22V12"></path>
                     </svg>
+                    دارایی‌های فعلی
+                </h2>
+                <div class="history-controls">
+                    <label for="history-search-input" class="inp">
+                        <input type="search" id="history-search-input" placeholder="&nbsp;">
+                        <span class="label">جستجو...</span>
+                        <span class="focus-bg"></span>
+                    </label>
+                    <div class="select-wrapper">
+                        <select id="history-filter" aria-label="فیلتر کردن تاریخچه">
+                            <option value="all">همه انواع</option>
+                            <option value="نو/زینتی">نو / زینتی</option>
+                            <option value="دست دوم">دست دوم</option>
+                            <option value="آب‌شده">آب‌شده</option>
+                            <option value="ارز">ارز</option>
+                        </select>
+                        <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </div>
+                    <div class="select-wrapper">
+                        <select id="history-sort" aria-label="مرتب‌سازی تاریخچه">
+                            <option value="date-desc">جدیدترین</option>
+                            <option value="date-asc">قدیمی‌ترین</option>
+                            <option value="profit-desc">بیشترین سود</option>
+                            <option value="loss-desc">بیشترین زیان</option>
+                        </select>
+                        <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m6 9 6 6 6-6" />
+                        </svg>
+                    </div>
                 </div>
-                <div class="select-wrapper">
-                    <select id="history-sort" aria-label="مرتب‌سازی تاریخچه">
-                        <option value="date-desc">جدیدترین</option>
-                        <option value="date-asc">قدیمی‌ترین</option>
-                        <option value="profit-desc">بیشترین سود</option>
-                        <option value="loss-desc">بیشترین زیان</option>
-                    </select>
-                    <svg class="select-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="m6 9 6 6 6-6" />
+                <div id="history-container">
+                    <!-- History items and skeletons will be injected here by JavaScript -->
+                </div>
+                <div class="show-more-container">
+                    <button id="show-more-active" class="modal-button secondary hidden">نمایش بیشتر</button>
+                </div>
+            </section>
+            <section class="card" id="sold-orders-card" aria-labelledby="sold-orders-heading">
+                <h2 id="sold-orders-heading">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                     </svg>
+                    سفارشات قبلی (فروخته شده)
+                </h2>
+                <div id="sold-history-container">
+                    <!-- Sold History items and skeletons will be injected here by JavaScript -->
                 </div>
-            </div>
-            <div id="history-container">
-                <!-- History items will be injected here by JavaScript -->
-            </div>
+                <div class="show-more-container">
+                    <button id="show-more-sold" class="modal-button secondary hidden">نمایش بیشتر</button>
+                </div>
+            </section>
         </section>
     </main>
 
@@ -576,13 +654,64 @@
         </div>
     </div>
 
+    <div id="sell-modal" class="modal-overlay hidden" aria-modal="true" role="dialog">
+        <div class="modal-content">
+            <h3 id="sell-modal-title">فروش </h3>
+            <p id="sell-modal-item-name" class="item-name"> </p>
+            
+            <div id="sell-options-container">
+                <div class="tabs tabs-small">
+                    <input type="radio" id="sell-option-live" name="sell-option-tabs" value="live" checked>
+                    <label class="tab tab-small" for="sell-option-live">
+                        قیمت لحظه‌ای (<span id="sell-modal-live-price"></span>)
+                    </label>
+                    <input type="radio" id="sell-option-manual" name="sell-option-tabs" value="manual">
+                    <label class="tab tab-small" for="sell-option-manual">قیمت دلخواه</label>
+                    <span class="glider glider-small"></span>
+                </div>
+            </div>
+
+            <div id="sell-manual-price-wrapper">
+                <div class="form-group hidden" id="sell-manual-price-group">
+                    <label for="sell-manual-price" class="inp">
+                        <input type="tel" id="sell-manual-price" class="calc-input"
+                            placeholder="&nbsp;">
+                        <span class="label" id="sell-manual-price-label">قیمت هر واحد</span>
+                        <span class="focus-bg"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="result" id="sell-modal-result">
+                <span class="label">سود/زیان نهایی:</span>
+                <span class="profit-loss-value neutral" id="sell-modal-pl-value">-</span>
+            </div>
+
+            <div class="modal-actions">
+                <button id="sell-modal-cancel-btn" class="modal-button secondary">انصراف</button>
+                <button id="sell-modal-confirm-btn" class="modal-button primary">فروش</button>
+            </div>
+        </div>
+    </div>
+
     <!-- === START: Firebase SDK Scripts === -->
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
     <!-- === END: Firebase SDK Scripts === -->
 
-    <script src="./script.js"></script>
+    <script type="module" src="/script.js"></script>  
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
 </body>
 
 </html>
